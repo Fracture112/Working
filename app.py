@@ -126,7 +126,7 @@ if uploaded_file:
     st.subheader("Original Image")
     st.image(image, use_column_width=True)
 
- # 🖊️ Crack Origin Annotation (safe canvas background image)
+# 🖊️ Crack Origin Annotation (safe canvas background image)
 canvas_bg = np.array(image.convert("RGB"))
 
 canvas_result = st_canvas(
@@ -141,14 +141,15 @@ canvas_result = st_canvas(
 # Extract annotation results
 marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
-# Edge Detection section (back to base indentation)
+# Edge Detection
 st.subheader("Edge Detection")
 st.image(edges, clamp=True, channels="GRAY", use_column_width=True)
 
+# GPT Analysis
+st.subheader("GPT Analysis Result")
+with st.spinner("Analyzing..."):
+    result = generate_gpt_analysis(description)
 
-    st.subheader("GPT Analysis Result")
-    with st.spinner("Analyzing..."):
-        result = generate_gpt_analysis(description)
 
     parts = result.split("\n\n", 1)
     summary = parts[0]
