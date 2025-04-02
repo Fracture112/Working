@@ -149,7 +149,7 @@ if uploaded_file:
 
 # Edge Detection
 st.subheader("Edge Detection")
-st.image(edges, clamp=True, channels="GRAY", use_column_width=True)
+st.image(edges, clamp=True, use_column_width=True)
 
 # GPT Analysis
 st.subheader("GPT Analysis Result")
