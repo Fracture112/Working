@@ -129,19 +129,19 @@ if uploaded_file:
 # 🖊️ Crack Origin Annotation
 canvas_result = st_canvas(
     fill_color="rgba(255, 0, 0, 0.6)",
-    background_image=image,  # ✅ Use PIL image, not np.array
+    background_image=image,
     height=image.height,
     width=image.width,
     drawing_mode="point",
     key="canvas"
 )
 
-# ✅ This line MUST be aligned with the one above
 marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
+# 🧠 Edge Detection (No Indent)
+st.subheader("Edge Detection")
+st.image(edges, clamp=True, use_column_width=True)
 
-    st.subheader("Edge Detection")
-    st.image(edges, clamp=True, use_column_width=True)
 
     st.subheader("GPT Analysis Result")
     with st.spinner("Analyzing..."):
