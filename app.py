@@ -138,23 +138,23 @@ canvas_result = st_canvas(
 
 marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
-# 🧠 Edge Detection (No Indent)
+# 🧠 Edge Detection
 st.subheader("Edge Detection")
 st.image(edges, clamp=True, use_column_width=True)
 
+# 🤖 GPT Analysis
+st.subheader("GPT Analysis Result")
+with st.spinner("Analyzing..."):
+    result = generate_gpt_analysis(description)
 
-    st.subheader("GPT Analysis Result")
-    with st.spinner("Analyzing..."):
-        result = generate_gpt_analysis(description)
+parts = result.split("\n\n", 1)
+summary = parts[0]
+table = parts[1] if len(parts) > 1 else ""
 
-    parts = result.split("\n\n", 1)
-    summary = parts[0]
-    table = parts[1] if len(parts) > 1 else ""
-
-    st.markdown("**Summary:**")
-    st.markdown(summary)
-    st.markdown("### Fracture Table")
-    st.markdown(table)
+st.markdown("**Summary:**")
+st.markdown(summary)
+st.markdown("### Fracture Table")
+st.markdown(table)
 
     confidence = extract_stress_confidence(result)
     if confidence:
