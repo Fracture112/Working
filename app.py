@@ -127,23 +127,24 @@ if uploaded_file:
     st.image(image, use_column_width=True)
 
 # 🖊️ Crack Origin Annotation
-# Load image once, keep it as PIL
-image = Image.open(uploaded_file).convert("RGB")
+uploaded_file = st.file_uploader("Upload fracture image", type=["jpg", "jpeg", "png"])
 
-# Use it for canvas background
-canvas_bg_np = np.array(image)
+if uploaded_file:
+    image = Image.open(uploaded_file).convert("RGB")  # ✅ Safe to load
+    canvas_bg_np = np.array(image)  # ✅ For canvas
 
-canvas_result = st_canvas(
-    fill_color="rgba(255, 0, 0, 0.6)",
-    background_image=canvas_bg_np,
-    height=canvas_bg_np.shape[0],
-    width=canvas_bg_np.shape[1],
-    drawing_mode="point",
-    key="canvas"
-)
+    canvas_result = st_canvas(
+        fill_color="rgba(255, 0, 0, 0.6)",
+        background_image=canvas_bg_np,
+        height=canvas_bg_np.shape[0],
+        width=canvas_bg_np.shape[1],
+        drawing_mode="point",
+        key="canvas"
+    )
 
-marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
+    marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
+    # continue your logic...
 
 
 # Edge Detection
