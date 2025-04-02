@@ -126,8 +126,7 @@ if uploaded_file:
     st.subheader("Original Image")
     st.image(image, use_column_width=True)
 
-    st.subheader("🖊️ Annotate Crack Origin")
-  # Safely convert image to RGB NumPy array for canvas
+ # 🖊️ Crack Origin Annotation (safe canvas background image)
 canvas_bg = np.array(image.convert("RGB"))
 
 canvas_result = st_canvas(
@@ -138,7 +137,9 @@ canvas_result = st_canvas(
     drawing_mode="point",
     key="canvas"
 )
-    marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
+
+# Extract annotation results (no indent errors)
+marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
     st.subheader("Edge Detection")
     st.image(edges, clamp=True, channels="GRAY", use_column_width=True)
