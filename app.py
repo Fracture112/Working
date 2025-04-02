@@ -126,17 +126,19 @@ if uploaded_file:
     st.subheader("Original Image")
     st.image(image, use_column_width=True)
 
-    # 🖊️ Crack Origin Annotation
+# 🖊️ Crack Origin Annotation
 canvas_result = st_canvas(
     fill_color="rgba(255, 0, 0, 0.6)",
-    background_image=image,
+    background_image=image,  # ✅ Use PIL image, not np.array
+    height=image.height,
+    width=image.width,
+    drawing_mode="point",
+    key="canvas"
+)
 
-        height=canvas_bg_np.shape[0],
-        width=canvas_bg_np.shape[1],
-        drawing_mode="point",
-        key="canvas"
-    )
-    marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
+# ✅ This line MUST be aligned with the one above
+marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
+
 
     st.subheader("Edge Detection")
     st.image(edges, clamp=True, use_column_width=True)
