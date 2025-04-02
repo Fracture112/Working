@@ -113,7 +113,7 @@ def generate_pdf(case_folder, summary, table):
 
     c.save()
 
-# Streamlit UI
+# STREAMLIT UI
 st.set_page_config(page_title="ANDALAN FRACTOGRAPHY SOLVER", layout="centered")
 st.title("🧠 ANDALAN FRACTOGRAPHY SOLVER – PRO EDITION")
 
@@ -126,10 +126,10 @@ if uploaded_file:
     st.subheader("Original Image")
     st.image(image, use_column_width=True)
 
-    canvas_background = np.array(image.convert("RGB"))
+    # ✅ Final fix: use safe PIL RGB image for canvas
     canvas_result = st_canvas(
         fill_color="rgba(255, 0, 0, 0.6)",
-        background_image=canvas_background,
+        background_image=image.convert("RGB"),
         height=image.height,
         width=image.width,
         drawing_mode="point",
@@ -220,6 +220,5 @@ if uploaded_file:
         st.success("Your input has been learned.")
         st.markdown("**GPT Follow-up Response:**")
         st.markdown(followup.choices[0].message.content)
-
 else:
     st.info("Please upload a fracture image to begin.")
