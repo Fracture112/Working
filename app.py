@@ -126,9 +126,12 @@ if uploaded_file:
     st.subheader("Original Image")
     st.image(image, use_column_width=True)
 
-    canvas_result = st_canvas(
-        fill_color="rgba(255, 0, 0, 0.6)",
-        background_image=image,
+canvas_background = np.array(image.convert("RGB"))
+
+canvas_result = st_canvas(
+    fill_color="rgba(255, 0, 0, 0.6)",
+    background_image=canvas_background,
+
         height=image.height,
         width=image.width,
         drawing_mode="point",
