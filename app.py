@@ -128,7 +128,7 @@ if uploaded_file:
 
 # 🖊️ Crack Origin Annotation
 # Make a fresh PIL image for annotation background
-canvas_bg = Image.open(uploaded_file).convert("RGB")
+canvas_bg = image.convert("RGB")
 canvas_bg_np = np.array(canvas_bg)
 
 canvas_result = st_canvas(
