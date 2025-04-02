@@ -138,11 +138,13 @@ canvas_result = st_canvas(
     key="canvas"
 )
 
-# Extract annotation results (no indent errors)
+# Extract annotation results
 marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
-    st.subheader("Edge Detection")
-    st.image(edges, clamp=True, channels="GRAY", use_column_width=True)
+# Edge Detection section (back to base indentation)
+st.subheader("Edge Detection")
+st.image(edges, clamp=True, channels="GRAY", use_column_width=True)
+
 
     st.subheader("GPT Analysis Result")
     with st.spinner("Analyzing..."):
