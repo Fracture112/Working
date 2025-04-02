@@ -127,10 +127,10 @@ if uploaded_file:
     st.image(image, use_column_width=True)
 
     # 🖊️ Crack Origin Annotation
-    canvas_bg_np = np.array(image)
-    canvas_result = st_canvas(
-        fill_color="rgba(255, 0, 0, 0.6)",
-        background_image=canvas_bg_np,
+canvas_result = st_canvas(
+    fill_color="rgba(255, 0, 0, 0.6)",
+    background_image=image,
+
         height=canvas_bg_np.shape[0],
         width=canvas_bg_np.shape[1],
         drawing_mode="point",
