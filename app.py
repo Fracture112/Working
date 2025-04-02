@@ -127,9 +127,11 @@ if uploaded_file:
     st.image(image, use_column_width=True)
 
 # 🖊️ Crack Origin Annotation
-# Make a fresh PIL image for annotation background
-canvas_bg = image.convert("RGB")
-canvas_bg_np = np.array(canvas_bg)
+# Load image once, keep it as PIL
+image = Image.open(uploaded_file).convert("RGB")
+
+# Use it for canvas background
+canvas_bg_np = np.array(image)
 
 canvas_result = st_canvas(
     fill_color="rgba(255, 0, 0, 0.6)",
@@ -141,6 +143,7 @@ canvas_result = st_canvas(
 )
 
 marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
+
 
 
 # Edge Detection
