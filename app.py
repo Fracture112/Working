@@ -127,14 +127,17 @@ if uploaded_file:
     st.image(image, use_column_width=True)
 
     st.subheader("🖊️ Annotate Crack Origin")
-    canvas_result = st_canvas(
-        fill_color="rgba(255, 0, 0, 0.6)",
-        background_image=np.array(image),
-        height=image.height,
-        width=image.width,
-        drawing_mode="point",
-        key="canvas"
-    )
+  # Safely convert image to RGB NumPy array for canvas
+canvas_bg = np.array(image.convert("RGB"))
+
+canvas_result = st_canvas(
+    fill_color="rgba(255, 0, 0, 0.6)",
+    background_image=canvas_bg,
+    height=canvas_bg.shape[0],
+    width=canvas_bg.shape[1],
+    drawing_mode="point",
+    key="canvas"
+)
     marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
     st.subheader("Edge Detection")
