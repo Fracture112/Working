@@ -120,19 +120,14 @@ st.title("🧠 ANDALAN FRACTOGRAPHY SOLVER – PRO EDITION")
 uploaded_file = st.file_uploader("Upload a fracture image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
-    image = Image.open(uploaded_file)
+    image = Image.open(uploaded_file).convert("RGB")
     edges, description = extract_fracture_description(image)
 
     st.subheader("Original Image")
     st.image(image, use_column_width=True)
 
-# 🖊️ Crack Origin Annotation
-uploaded_file = st.file_uploader("Upload fracture image", type=["jpg", "jpeg", "png"])
-
-if uploaded_file:
-    image = Image.open(uploaded_file).convert("RGB")  # ✅ Safe to load
-    canvas_bg_np = np.array(image)  # ✅ For canvas
-
+    # 🖊️ Crack Origin Annotation
+    canvas_bg_np = np.array(image)
     canvas_result = st_canvas(
         fill_color="rgba(255, 0, 0, 0.6)",
         background_image=canvas_bg_np,
@@ -141,21 +136,14 @@ if uploaded_file:
         drawing_mode="point",
         key="canvas"
     )
-
     marked_points = canvas_result.json_data["objects"] if canvas_result.json_data else []
 
-    # continue your logic...
+    st.subheader("Edge Detection")
+    st.image(edges, clamp=True, use_column_width=True)
 
-
-# Edge Detection
-st.subheader("Edge Detection")
-st.image(edges, clamp=True, use_column_width=True)
-
-# GPT Analysis
-st.subheader("GPT Analysis Result")
-with st.spinner("Analyzing..."):
-    result = generate_gpt_analysis(description)
-
+    st.subheader("GPT Analysis Result")
+    with st.spinner("Analyzing..."):
+        result = generate_gpt_analysis(description)
 
     parts = result.split("\n\n", 1)
     summary = parts[0]
